@@ -1,0 +1,17 @@
+{% extends 'recipeblog/base.html' %}
+
+{% block content %}
+<div class="jumbotron">
+    <h2>Please Sign up:</h2>
+
+    <form  method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" class="btn btn-primary" value="Sign Up">
+        <a class="btn btn-primary" href="{% url 'login' %}" role="button">Log in</a>
+        <input type="hidden" class="next" value="{{next}}">
+
+    </form>
+</div>
+
+{% endblock %}
