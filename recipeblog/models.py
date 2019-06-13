@@ -2,19 +2,32 @@ from django.db import models
 from django.utils import timezone
 from django.urls import reverse
 
+from django.shortcuts import get_object_or_404
 # Create your models here.
 
 
+class Ingredient(models.Model):
+    ingredient = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.ingredient
+
+
 class Post(models.Model):
-    author = models.ForeignKey('auth.User',on_delete=models.CASCADE,)
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE,)
     title = models.CharField(max_length=200)
-    text = models.TextField()
+    image = models.ImageField()
+    description = models.TextField()
+    difficulty = models.CharField(max_length=1, choices=(('E', 'Easy'), ('M', 'Medium'), ('H', 'Hard')))
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 
+    ingredient = models.ManyToManyField(Ingredient)
+
     # if you decide to publish and hit publish button, the publish_date will be now.
-    def publish(self):
+    def publish(self,user):
         self.published_date = timezone.now()
+        self.author = user
         self.save()
 
     def approve_comment(self):

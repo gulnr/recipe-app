@@ -1,10 +1,10 @@
 {% extends "recipeblog/base.html" %}
 {% block content %}
     <h1> New Recipe</h1>
-    <form class ="post-form" method="POST">
+    <form class ="post-form" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}
-        <input class="btn btn-primary" type="submit" value="Save">
+        <input class="btn btn-primary loader" type="submit" value="Save">
     </form>
 
     <script>var editor = new MediumEditor('.editable');</script>

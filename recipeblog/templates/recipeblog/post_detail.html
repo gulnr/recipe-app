@@ -6,18 +6,19 @@
             {{ post.published_date }}
         </div>
     {% else %}
-        <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+        <a class="btn btn-default loader" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
     {% endif %}
-
+    <img class="food-img" alt="{{ post }}" src="{{ post.image.url }}"/>
     <p class='postcontent' >{{ post.text|safe|linebreaksbr}}</p>
 
     {% if user.is_authenticated %}
-        <a class="btn btn-primary" href="{% url 'post_edit' pk=post.pk %}">Edit</a>
-        <a class="btn btn-primary" href="{% url 'post_remove' pk=post.pk %}">Remove</a>
+
+        <a class="btn btn-primary loader" href="{% url 'post_edit' pk=post.pk %}">Edit</a>
+        <a class="btn btn-primary loader" href="{% url 'post_remove' pk=post.pk %}">Remove</a>
     {% endif %}
 
     <hr>
-    <a class="btn btn-primary btn-comment" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+    <a class="btn btn-primary btn-comment loader" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
     <div class="container">
         {% for comment in post.comments.all %}
         <br>

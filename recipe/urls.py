@@ -17,6 +17,9 @@ from django.contrib import admin
 from django.contrib.auth.views import login, logout
 from django.urls import path, include
 from accounts.views import SignUp
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from . import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,3 +28,5 @@ urlpatterns = [
     path('accounts/login', login, name='login'),
     path('accounts/logout', logout, name='logout'),
 ]
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

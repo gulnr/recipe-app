@@ -1,4 +1,6 @@
+.post-form{
 
+}
 .postdate{
   text-align: center;
 }
@@ -39,7 +41,7 @@
 .loader{
   filter:hue-rotate(0deg);
   color: linear-gradient(45deg,#0f8,#08f);
-  animation:hue 5000ms infinite linear;
+  animation:hue 10000ms infinite linear;
 }
 
 @keyframes spinify {
