@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'recipeblog/base.html' %}
 
-</body>
-</html>
+{% block content %}
+<div class="jumbotron">
+    <h2>Please Login:</h2>
+    {% if form.errors %}
+     <p> Your username and password didn't match! Try again </p>
+    {% endif %}
+
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" class="btn btn-primary" value="Login">
+            <input type="hidden" class="next" value="{{next}}">
+    </form>
+
+</div>
+
+{% endblock %}

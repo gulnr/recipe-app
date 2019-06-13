@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "recipeblog/base.html" %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <p> Do you want to delete {{object}}? </p>
+        <input type="submit" class="btn btn-danger" value="Confirm">
+    </form>
+{% endblock %}
