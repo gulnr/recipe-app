@@ -1,12 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import (TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView)
-from recipeblog.models import Post, Comment, Ingredient
+from recipeblog.models import Post, Comment, Ingredient, Like, Rate
 from recipeblog.forms import PostForm, CommentForm
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.db import IntegrityError
+from django.utils.datastructures import MultiValueDictKeyError
 
 # function based views use decorators | class based views use mixins
 # Create your views here.
@@ -59,7 +61,7 @@ class DraftListView(LoginRequiredMixin, ListView):
         return Post.objects.filter(published_date__isnull=True).order_by('created_date')
 
 
-####### COMMENT #######
+
 @login_required
 def post_publish(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -67,7 +69,35 @@ def post_publish(request, pk):
     post.publish(user)
     return redirect('post_detail', pk=pk)
 
+@login_required
+def post_like(request,pk):
+    post = get_object_or_404(Post, pk=pk)
+    user = get_object_or_404(User, pk=request.user.id)
 
+    # Like instance created
+    try:
+        Like.objects.create(user=user, post=post)
+    except IntegrityError:
+        return redirect('post_detail', pk=pk)
+    return redirect('post_detail', pk=pk)
+
+@login_required
+def post_rate(request,pk):
+    post = get_object_or_404(Post, pk=pk)
+    user = get_object_or_404(User, pk=request.user.id)
+    if request.method == "POST":
+        try:
+            point = request.POST.get['rate_point']
+        except MultiValueDictKeyError:
+            point = 0
+
+
+    Rate.objects.update_or_create(user=user, post=post, rate_point=point)
+
+    return redirect('post_detail', pk=pk)
+
+
+####### COMMENT #######
 @login_required
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)

@@ -1,24 +1,64 @@
 {% extends "recipeblog/base.html" %}
+{% load staticfiles %}
 {% block content %}
-    <h1 class='posttitle loader'>{{ post.title }}</h1>
+    <h1>{{ post.title }}</h1>
     {% if post.published_date %}
-        <div class="date postdate">
-            {{ post.published_date }}
+        <div card-top>
+            <img src="/media/img/knife.png" alt="knife"> {{ post.author  }}
+            <img src="/media/img/muscle.png" alt="muscle"> {{ post.difficulty }}
+            <img src="/media/img/date.png" alt="date"> {{ post.published_date|date:"d/m/Y" }}
         </div>
     {% else %}
         <a class="btn btn-default loader" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
     {% endif %}
-    <img class="food-img" alt="{{ post }}" src="{{ post.image.url }}"/>
-    <p class='postcontent' >{{ post.text|safe|linebreaksbr}}</p>
+
+    <img class="rounded" alt="{{ post }}" src="{{ post.image.url }}"/>
+
+    <div class="post-detail-btn">
+        {% if user.is_authenticated %}
+            <a class="btn btn-primary loader" href="{% url 'post_like' pk=post.pk %}">Like ({{post.like.count}})</a>
+        {% else %}
+            <a class="btn btn-primary loader" href="#">Like ({{post.like.count}})</a>
+        {% endif %}
+    </div>
+
+    <h2>Ingredients</h2>
+    <ul>
+        {% for ingredient in post.ingredient.all %}
+            <li> {{ingredient}}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Description</h2>
+    <p>{{ post.description|safe|linebreaksbr}}</p>
+
+
+    {% if user == post.author %}
+        <div class=" justify-end">
+            <a class="btn btn-primary loader" href="{% url 'post_edit' pk=post.pk %}">Edit</a>
+            <a class="btn btn-primary loader" href="{% url 'post_remove' pk=post.pk %}">Remove</a>
+        </div>
+    {% endif %}
 
     {% if user.is_authenticated %}
-
-        <a class="btn btn-primary loader" href="{% url 'post_edit' pk=post.pk %}">Edit</a>
-        <a class="btn btn-primary loader" href="{% url 'post_remove' pk=post.pk %}">Remove</a>
+        <form  action="{% url 'post_rate' pk=post.pk %}" method="POST">
+            {% csrf_token %}
+            <select>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            <input type="submit" class="btn btn-primary loader" value="Rate"/>
+        </form>
+    {% else %}
+        <a class="btn btn-primary loader" href="#">Rate</a>
     {% endif %}
 
     <hr>
-    <a class="btn btn-primary btn-comment loader" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+    <a class="btn btn-primary loader" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
     <div class="container">
         {% for comment in post.comments.all %}
         <br>

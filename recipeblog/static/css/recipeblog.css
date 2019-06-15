@@ -1,41 +1,39 @@
-.post-form{
-
+.post-card{
+    border: 1px solid black;
+    border-radius: 4px;
+    margin-top: 15px;
+    padding: 15px;
 }
-.postdate{
-  text-align: center;
+.post-card h1 a{
+    color:black;
+}
+
+.post-card-top{
+    margin-bottom:15px;
+}
+
+.post-card-footer{
+    font-size:16px;
+}
+
+.justify-end{
+  position: absolute;
+  right: 0px;
 }
 
 .posttitle{
   font-family: 'Russo One', sans-serif;
   font-size: 3em;
-  text-align: center;
+  text-align: left;
+}
+.post-detail-btn{
+    margin:10px;
 }
 
-.postcontent{
-  font-family: 'Montserrat';
-  font-size: 1.5em;
-}
 
-.centerstage{
-  margin-left: auto;
-  margin-right: auto;
-}
 
-.btn-comment{
-  position: absolute;
-  right: 0px;
-}
 
-.bigbrand{
-  font-size: 1.5em;
-}
 
-.blog_post{
-    border: 1px solid #999;
-    border-radius: 4px;
-    margin-top: 15px;
-    padding: 15px;
-}
 /*COLOR CHANGER*/
 /*Credit and Source: http://codepen.io/thapliyalshivam/pen/dvgXVO*/
 .loader{
