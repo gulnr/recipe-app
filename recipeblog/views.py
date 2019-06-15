@@ -39,6 +39,7 @@ class CreatePostView(LoginRequiredMixin, CreateView):
     model = Post
 
 
+
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     login_url = '/login/'
     redirect_field_name = 'recipeblog/post_detail.html'
@@ -86,13 +87,12 @@ def post_rate(request,pk):
     post = get_object_or_404(Post, pk=pk)
     user = get_object_or_404(User, pk=request.user.id)
     if request.method == "POST":
+        point = request.POST.get('point')
         try:
-            point = request.POST.get['rate_point']
-        except MultiValueDictKeyError:
-            point = 0
+            Rate.objects.create(user=user, post=post, rate_point=point)
 
-
-    Rate.objects.update_or_create(user=user, post=post, rate_point=point)
+        except IntegrityError:
+            Rate.objects.filter(post=post, user=user).update(rate_point=point)
 
     return redirect('post_detail', pk=pk)
 

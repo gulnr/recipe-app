@@ -34,6 +34,9 @@ class Post(models.Model):
     def like(self):
         return Like.objects.filter(post=self.pk)
 
+    def rate(self):
+        return Rate.objects.filter(post=self.pk)
+
     def rate_avg(self):
         return self
 
@@ -62,8 +65,6 @@ class Rate(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     rate_point = models.IntegerField()
 
-    class Meta:
-        unique_together = ('post', 'user')
 
 
 class Comment(models.Model):

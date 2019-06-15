@@ -43,7 +43,7 @@
     {% if user.is_authenticated %}
         <form  action="{% url 'post_rate' pk=post.pk %}" method="POST">
             {% csrf_token %}
-            <select>
+            <select name="point">
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -51,6 +51,8 @@
                 <option value="4">4</option>
                 <option value="5">5</option>
             </select>
+
+
             <input type="submit" class="btn btn-primary loader" value="Rate"/>
         </form>
     {% else %}
