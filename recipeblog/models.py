@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 
 from django.shortcuts import get_object_or_404
@@ -15,7 +16,7 @@ class Ingredient(models.Model):
 
 
 class Post(models.Model):
-    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    author = models.ForeignKey('auth.User', default=User.objects.get(username='eylul').pk, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     image = models.ImageField()
     description = models.TextField()
@@ -64,8 +65,6 @@ class Rate(models.Model):
     post = models.ForeignKey('recipeblog.Post', on_delete=models.CASCADE)
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     rate_point = models.IntegerField()
-
-
 
 class Comment(models.Model):
     post = models.ForeignKey('recipeblog.Post', related_name='comments', on_delete=models.CASCADE,)

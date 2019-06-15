@@ -50,11 +50,17 @@ class PostDetailView(DetailView):
 
 class CreatePostView(LoginRequiredMixin, CreateView):
     login_url = '/login/'
-    redirect_field_name = 'recipeblog/post_detail.html'
-
     form_class = PostForm
     model = Post
 
+    # def post(self, request, *args, **kwargs):
+    #     form = PostForm(request.POST)
+    #     if form.is_valid():
+    #         post_obj = form.save(commit=False)
+    #         post_obj.author = self.get_object_or_404(User, pk=request.user.id)
+    #         post_obj.save()
+    #         return redirect('post_detail.html', post_obj.pk)
+    #     return render(request, 'post_form.html', {'form': form})
 
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
