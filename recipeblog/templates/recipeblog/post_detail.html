@@ -9,16 +9,16 @@
             <img src="/media/img/date.png" alt="date"> {{ post.published_date|date:"d/m/Y" }}
         </div>
     {% else %}
-        <a class="btn btn-default loader" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+        <a class="btn btn-outline-primarly loader" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
     {% endif %}
 
     <img class="rounded" alt="{{ post }}" src="{{ post.image.url }}"/>
 
     <div class="post-detail-btn">
         {% if user.is_authenticated %}
-            <a class="btn btn-primary loader" href="{% url 'post_like' pk=post.pk %}">Like ({{post.like.count}})</a>
+            <a class="btn btn-outline-primary loader" href="{% url 'post_like' pk=post.pk %}">Like ({{post.like.count}})</a>
         {% else %}
-            <a class="btn btn-primary loader" href="#">Like ({{post.like.count}})</a>
+            <a class="btn btn-outline-primary loader" href="#">Like ({{post.like.count}})</a>
         {% endif %}
     </div>
 
@@ -35,8 +35,8 @@
 
     {% if user == post.author %}
         <div class=" justify-end">
-            <a class="btn btn-primary loader" href="{% url 'post_edit' pk=post.pk %}">Edit</a>
-            <a class="btn btn-primary loader" href="{% url 'post_remove' pk=post.pk %}">Remove</a>
+            <a class="btn btn-outline-primary loader" href="{% url 'post_edit' pk=post.pk %}">Edit</a>
+            <a class="btn btn-outline-primary loader" href="{% url 'post_remove' pk=post.pk %}">Remove</a>
         </div>
     {% endif %}
 
@@ -53,26 +53,25 @@
             </select>
 
 
-            <input type="submit" class="btn btn-primary loader" value="Rate"/>
+            <input type="submit" class="btn btn-outline-primary loader" value="Rate"/>
         </form>
     {% else %}
-        <a class="btn btn-primary loader" href="#">Rate</a>
+        <a class="btn btn-outline-primary loader" href="#">Rate</a>
     {% endif %}
 
     <hr>
-    <a class="btn btn-primary loader" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+    <a class="btn btn-outline-primary loader" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
     <div class="container">
         {% for comment in post.comments.all %}
+        <hr>
         <br>
             {% if user.is_authenticated or comment.approved_comment %}
-                    {{ comment.created_date }}
-                    {% if not comment.approved_comment %}
-                        <a class="btn btn-primary" href="{% url 'comment_remove' pk=comment.pk %}">Delete</a>
-                        <a class="btn btn-primary" href="{% url 'comment_approve' pk=comment.pk %}">Approve</a>
-                    {% endif %}
-
-                <p>{{ comment.text|safe|linebreaks }}</p>
-                <p>Posted by: <strong>{{ comment.author }}</strong></p>
+                <p> @<strong>{{ comment.author }}:</strong> {{ comment.text|safe|linebreaks }}
+                {{ comment.created_date|date:"d/m/Y" }}</p>
+                {% if not comment.approved_comment %}
+                    <a class="btn btn-outline-primary" href="{% url 'comment_remove' pk=comment.pk %}">Delete</a>
+                    <a class="btn btn-outline-primary" href="{% url 'comment_approve' pk=comment.pk %}">Approve</a>
+                {% endif %}
             {% endif %}
             {% empty %}
             <p>No comments posted.</p>
