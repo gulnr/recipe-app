@@ -4,7 +4,6 @@ from recipeblog import views
 
 urlpatterns = [
     path('', views.PostListView.as_view(), name='post_list'),
-    path('about/', views.AboutView.as_view(), name='about'),
     path('post/<int:pk>', views.PostDetailView.as_view(), name='post_detail'),
     path('post/new/', views.CreatePostView.as_view(), name='post_new'),
     path('post/<int:pk>/edit/', views.PostUpdateView.as_view(), name='post_edit'),
@@ -16,5 +15,6 @@ urlpatterns = [
     path('post/<int:pk>/publish/', views.post_publish, name='post_publish'),
     path('post/<int:pk>/like', views.post_like, name="post_like"),
     path('post/<int:pk>/rate', views.post_rate, name="post_rate"),
+    path('search', views.SearchPostListView.as_view(), name="search")
     # path('ingredient/<str:ingredient_value>/', views.ingredient, name='ingredient'),
 ]
