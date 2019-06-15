@@ -1,6 +1,17 @@
 {% extends "recipeblog/base.html" %}
-{% load static %}
+{% load staticfiles %}
 {% block content %}
+
+    <div class="col-md-4 justify-end ">
+        <div class="post-search-card ">
+            <h2> Search </h2>
+            <form method="GET" action="{% url 'search' %}">
+                <input style="margin-right:10px;" type="text" name='query' placeholder="ingredient, dish, keyword..." value="{{ request.GET.query }}">
+                <input type="submit" class="btn btn-outline-primary loader" value="Submit">
+            </form>
+        </div>
+    </div>
+
     <div class="col-md-8">
         {% for post in post_list %}
             <div class="post-card">
@@ -15,4 +26,5 @@
 
         {% endfor %}
     </div>
+
 {% endblock %}
