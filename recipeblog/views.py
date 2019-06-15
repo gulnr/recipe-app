@@ -27,6 +27,27 @@ class PostListView(ListView):
         return Post.objects.filter(published_date__lte=timezone.now()).order_by('created_date')
 
 
+class SearchPostListView(ListView):
+    model = Post
+
+    def get_queryset(self):
+        query_list = [item.strip() for item in self.request.GET.get("query").split()]
+        post_ids = set()
+        for s_item in query_list:
+            for ing in Ingredient.objects.filter(ingredient__contains=s_item):
+                post_ids.add(ing.id)
+        result_list = Post.objects.filter(
+                ingredient__in=list(post_ids)).order_by("created_time")
+
+        for s_item in query_list:
+            result_list2 = Post.objects.filter(
+                Q(title__contains=s_item)
+                | Q(description__contains=s_item)).order_by('created_date')
+            result_list = result_list | result_list2
+
+            return result_list.distinct()
+
+
 class PostDetailView(DetailView):
     model = Post
 
