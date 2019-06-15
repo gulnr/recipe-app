@@ -21,6 +21,10 @@
 
                 <div class="post-card-footer">
                     {{ post.published_date|date:"d/m/Y"}} . {{post.like.count}} likes . {{post.approve_comment.count}} comments . by {{post.author}}
+                    {% if user == post.author %}
+                        <a class="btn btn-link loader" href="{% url 'post_edit' pk=post.pk %}">Edit</a>
+                        <a class="btn btn-link loader" href="{% url 'post_remove' pk=post.pk %}">Remove</a>
+                    {% endif %}
                 </div>
             </div>
 
