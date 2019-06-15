@@ -8,21 +8,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from django.db.models import Q
 from django.utils.datastructures import MultiValueDictKeyError
 
 # function based views use decorators | class based views use mixins
 # Create your views here.
 
 
-class AboutView(TemplateView):
-    template_name = 'about.html'
-
-
 class PostListView(ListView):
     model = Post
 
     # sql query filter  base on condition
-
     def get_queryset(self):
         return Post.objects.filter(published_date__lte=timezone.now()).order_by('created_date')
 
@@ -116,6 +112,7 @@ def post_rate(request,pk):
             Rate.objects.filter(post=post, user=user).update(rate_point=point)
 
     return redirect('post_detail', pk=pk)
+
 
 
 ####### COMMENT #######
