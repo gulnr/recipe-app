@@ -9,7 +9,7 @@
             <img src="/media/img/date.png" alt="date"> {{ post.published_date|date:"d/m/Y" }}
         </div>
     {% else %}
-        <a class="btn btn-outline-primarly loader" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+        <a class="btn btn-outline-primary loader" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
     {% endif %}
 
     <img class="rounded" alt="{{ post }}" src="{{ post.image.url }}"/>

@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth.models import User
-
+from django.db.models import Avg
 
 from django.shortcuts import get_object_or_404
 # Create your models here.
@@ -39,7 +39,13 @@ class Post(models.Model):
         return Rate.objects.filter(post=self.pk)
 
     def rate_avg(self):
-        return self
+        rates = Rate.objects.filter(post=self.pk)
+        result = rates.aggregate(Avg('rate_point'))['rate_point__avg']
+
+        if result:
+            return result
+        else:
+            return 0
 
     def approve_comment(self):
         # there is a list of comments somewhere. checking comments approved or not.

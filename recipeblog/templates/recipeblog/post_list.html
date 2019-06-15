@@ -1,7 +1,6 @@
 {% extends "recipeblog/base.html" %}
 {% load staticfiles %}
 {% block content %}
-
     <div class="col-md-4 justify-end ">
         <div class="post-search-card ">
             <h2> Search </h2>
@@ -23,8 +22,8 @@
                 <p>{{ post.description|safe |truncatechars:200}}</p>
 
                 <div class="post-card-footer">
-                    {{ post.published_date|date:"d/m/Y"}} . {{post.like.count}} likes . {{post.approve_comment.count}} comments . by {{post.author}}
-                    {% if user == post.author %}
+                    <strong>{{ post.published_date|date:"d/m/Y"}} . {{post.like.count}} likes . {{post.rate_avg}}/5 ({{post.rate.count}} Votes). {{post.approve_comment.count}} comments . by {{post.author}}
+                        {% if user == post.author %} </strong>
                         <a class="btn btn-link loader" href="{% url 'post_edit' pk=post.pk %}">Edit</a>
                         <a class="btn btn-link loader" href="{% url 'post_remove' pk=post.pk %}">Remove</a>
                     {% endif %}
