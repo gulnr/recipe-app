@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.db.models import Avg
 
 
+
 from django.shortcuts import get_object_or_404
 # Create your models here.
 
@@ -17,7 +18,7 @@ class Ingredient(models.Model):
 
 
 class Post(models.Model):
-    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     image = models.ImageField()
     description = models.TextField()
@@ -28,10 +29,6 @@ class Post(models.Model):
     ingredients = models.ManyToManyField(Ingredient)
 
     # if you decide to publish and hit publish button, the publish_date will be now.
-    def save_draft(self,user):
-        self.author = user
-        self.save()
-
     def publish(self, user):
         self.published_date = timezone.now()
         self.author = user
