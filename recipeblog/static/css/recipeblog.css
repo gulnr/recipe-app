@@ -27,7 +27,11 @@
     margin-bottom:15px;
 }
 
-
+.post-pagination{
+    margin:15px;
+    padding: 10px;
+    justify:center;
+}
 
 .justify-end{
   position: absolute;
