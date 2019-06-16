@@ -65,6 +65,7 @@ class SearchPostListView(ListView):
 class TopIngredientView(ListView):
     model = Post
     paginate_by = 3
+    redirect_field_name = 'recipeblog/post_list.html'
     most_used_ingredients = Post.objects.all().values(
         'ingredients__ingredient_name').annotate(
             total=Count('ingredients')).order_by('-total')[:5]
