@@ -17,7 +17,7 @@ from django.db.models import Count
 
 class PostListView(ListView):
     model = Post
-    paginate_by = 3  # if pagination is desired
+    paginate_by = 6  # if pagination is desired
     most_used_ingredients = Post.objects.all().values(
         'ingredients__ingredient_name').annotate(
             total=Count('ingredients')).order_by('-total')[:5]
@@ -34,7 +34,7 @@ class PostListView(ListView):
 
 class SearchPostListView(ListView):
     model = Post
-    paginate_by = 3
+    paginate_by = 6
     most_used_ingredients = Post.objects.all().values(
         'ingredients__ingredient_name').annotate(
             total=Count('ingredients')).order_by('-total')[:5]
@@ -64,7 +64,7 @@ class SearchPostListView(ListView):
 
 class TopIngredientView(ListView):
     model = Post
-    paginate_by = 3
+    paginate_by = 6
     redirect_field_name = 'recipeblog/post_list.html'
     most_used_ingredients = Post.objects.all().values(
         'ingredients__ingredient_name').annotate(
@@ -119,7 +119,7 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
 
 class DraftListView(LoginRequiredMixin, ListView):
     login_url = '/login/'
-    paginate_by = 5
+    paginate_by = 6
     redirect_field_name = 'recipeblog/post_list.html'
     model = Post
 
