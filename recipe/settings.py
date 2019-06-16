@@ -25,7 +25,7 @@ SECRET_KEY = 't77aka#lrny&&+uro*b4%k4y47w=o!w4v__u6fi5enffi=f+om'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["recipehipo.pythonanywhere.com"]
+ALLOWED_HOSTS = ["recipehipo.pythonanywhere.com","127.0.0.1"]
 
 
 # Application definition
