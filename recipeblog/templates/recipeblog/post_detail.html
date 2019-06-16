@@ -18,7 +18,7 @@
         {% if user.is_authenticated %}
             <a class="btn btn-outline-primary loader" href="{% url 'post_like' pk=post.pk %}">Like ({{post.like.count}})</a>
         {% else %}
-            <a class="btn btn-outline-primary loader" href="#">Like ({{post.like.count}})</a>
+            <a class="btn btn-outline-primary loader" href="{% url 'login' %}">Like ({{post.like.count}})</a>
         {% endif %}
     </div>
 
@@ -52,16 +52,20 @@
                 <option value="5">5</option>
             </select>
 
-
             <input type="submit" class="btn btn-outline-primary loader" value="Rate"/>
             <button type="button" class="btn btn-info loader">You Rated: {{post.rate_avg}}/5 ({{post.rate.count}} Votes)</button>
         </form>
     {% else %}
-        <a class="btn btn-outline-primary loader" href="#">Rate</a>
+        <a class="btn btn-outline-primary loader" href="{% url 'login' %}">Rate</a>
     {% endif %}
 
     <hr>
-    <a class="btn btn-outline-primary loader" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+    {% if user.is_authenticated %}
+        <a class="btn btn-outline-primary loader" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+    {% else %}
+        <a class="btn btn-outline-primary loader" href="{% url 'login' %}">Add comment</a>
+    {% endif %}
+
     <div class="container">
         {% for comment in post.comments.all %}
         <hr>
