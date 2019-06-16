@@ -27,7 +27,7 @@
         {% for post in post_list %}
             <div class="post-card">
                 <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post }}</a></h1>
-                <img class="food-img" alt="{{ post }}" src="{{ post.image.url }}"/>
+                <img class="post-img" alt="{{ post }}" src="{{ post.image.url }}"/>
                 <p>{{ post.description|safe |truncatechars:200}}</p>
 
                 <div class="post-card-footer">
