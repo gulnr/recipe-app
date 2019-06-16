@@ -1,6 +1,6 @@
 .post-card{
     border: 1px solid black;
-    border-radius: 4px;
+    border-radius: 5px;
     margin-top: 15px;
     padding: 15px;
 }
@@ -13,10 +13,9 @@
 }
 
 .post-search-card{
-    position: absolute;
-    border: 1px solid #999;
-    border-radius: 5px;
-    margin-top: 15px;
+    border: 1px solid black;
+    border-radius: 6px;
+    margin-top:10px;
     padding: 15px;
 }
 
@@ -24,9 +23,7 @@
     margin-bottom:15px;
 }
 
-.post-card-footer{
-    font-size:16px;
-}
+
 
 .justify-end{
   position: absolute;
@@ -42,7 +39,9 @@
     margin:10px;
 }
 
-
+.post-card-footer{
+    font-size:16px;
+}
 
 
 
