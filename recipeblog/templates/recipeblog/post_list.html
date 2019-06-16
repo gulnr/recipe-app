@@ -5,7 +5,7 @@
         <div class="post-search-card ">
             <h2> Search </h2>
             <form method="GET" action="{% url 'search' %}">
-                <input style="margin-right:10px;" type="text" name='query' placeholder="ingredient, dish, keyword..." value="{{ request.GET.query }}">
+                <input style="margin-right:10px;" type="text" name='query' placeholder="ingredient, dish, keyword..." value="{{ request.GET.query }}" required>
                 <input type="submit" class="btn btn-outline-primary loader" value="Submit">
             </form>
             <div style="margin-top:10px;" class="alert alert-info" role="alert">
