@@ -4,7 +4,11 @@
     <form class ="post-form" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}
+        <p style="margin-top:10px; font-size:12px;" >
+            Hold down to CTRL (Windows)/Command (MAc) button to select multiple option
+        </p>
         <input class="btn btn-primary loader" type="submit" value="Save">
+
     </form>
 
     <script>var editor = new MediumEditor('.editable');</script>
