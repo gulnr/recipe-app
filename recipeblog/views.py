@@ -18,6 +18,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 
 class PostListView(ListView):
     model = Post
+    paginate_by = 3  # if pagination is desired
     most_used_ingredients = Post.objects.all().values(
         'ingredients__ingredient_name').annotate(
             total=Count('ingredients')).order_by('-total')[:5]
@@ -34,6 +35,7 @@ class PostListView(ListView):
 
 class SearchPostListView(ListView):
     model = Post
+    paginate_by = 3
     most_used_ingredients = Post.objects.all().values(
         'ingredients__ingredient_name').annotate(
             total=Count('ingredients')).order_by('-total')[:5]
@@ -63,7 +65,7 @@ class SearchPostListView(ListView):
 
 class TopIngredientView(ListView):
     model = Post
-
+    paginate_by = 3
     most_used_ingredients = Post.objects.all().values(
         'ingredients__ingredient_name').annotate(
             total=Count('ingredients')).order_by('-total')[:5]
@@ -81,6 +83,8 @@ class TopIngredientView(ListView):
         context = super(TopIngredientView, self).get_context_data(**kwargs)
         context['most_used_ingredients'] = self.most_used_ingredients
         return context
+
+
 
 
 
@@ -118,6 +122,7 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
 
 class DraftListView(LoginRequiredMixin, ListView):
     login_url = '/login/'
+    paginate_by = 5
     redirect_field_name = 'recipeblog/post_list.html'
     model = Post
 
