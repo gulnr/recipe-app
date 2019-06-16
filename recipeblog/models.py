@@ -73,6 +73,9 @@ class Rate(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     rate_point = models.IntegerField()
 
+    class Meta:
+        unique_together = ('post', 'user')
+
 
 class Comment(models.Model):
     post = models.ForeignKey('recipeblog.Post', related_name='comments', on_delete=models.CASCADE,)
