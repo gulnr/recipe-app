@@ -4,15 +4,16 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.db.models import Avg
 
+
 from django.shortcuts import get_object_or_404
 # Create your models here.
 
 
 class Ingredient(models.Model):
-    ingredient = models.CharField(max_length=200)
+    ingredient_name = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.ingredient
+        return self.ingredient_name
 
 
 class Post(models.Model):
@@ -24,7 +25,7 @@ class Post(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 
-    ingredient = models.ManyToManyField(Ingredient)
+    ingredients = models.ManyToManyField(Ingredient)
 
     # if you decide to publish and hit publish button, the publish_date will be now.
     def publish(self, user):
@@ -71,6 +72,7 @@ class Rate(models.Model):
     post = models.ForeignKey('recipeblog.Post', on_delete=models.CASCADE)
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     rate_point = models.IntegerField()
+
 
 class Comment(models.Model):
     post = models.ForeignKey('recipeblog.Post', related_name='comments', on_delete=models.CASCADE,)
