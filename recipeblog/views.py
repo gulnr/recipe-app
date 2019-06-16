@@ -1,8 +1,8 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect,HttpResponseRedirect
 from django.views.generic import (TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView)
 from recipeblog.models import Post, Comment, Ingredient, Like, Rate
 from recipeblog.forms import PostForm, CommentForm
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
@@ -10,7 +10,6 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.db.models import Q
 from django.db.models import Count
-from django.utils.datastructures import MultiValueDictKeyError
 
 # function based views use decorators | class based views use mixins
 # Create your views here.
@@ -94,14 +93,11 @@ class CreatePostView(LoginRequiredMixin, CreateView):
     form_class = PostForm
     model = Post
 
-    # def post(self, request, *args, **kwargs):
-    #     form = PostForm(request.POST)
-    #     if form.is_valid():
-    #         post_obj = form.save(commit=False)
-    #         post_obj.author = self.get_object_or_404(User, pk=request.user.id)
-    #         post_obj.save()
-    #         return redirect('post_detail.html', post_obj.pk)
-    #     return render(request, 'post_form.html', {'form': form})
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.author = self.request.user
+        obj.save()
+        return HttpResponseRedirect(reverse('post_detail', args=[obj.pk]))
 
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
