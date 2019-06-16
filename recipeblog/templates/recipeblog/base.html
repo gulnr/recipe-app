@@ -4,7 +4,7 @@
 
 
     <head>
-        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
         <title>Recipe Blog</title>
 
         <!-- Bootstrap -->
@@ -23,11 +23,10 @@
 
         <!-- Font -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat|Russo+One" rel="stylesheet">
-
     </head>
-    <body >
+    <body>
         <!-- NAV BAR -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark custom-navbar">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
           <div class="container">
               <a class="navbar-brand" href="{% url 'post_list' %}">Recipe.com</a>
               <div class="collapse navbar-collapse" id="navbarNav">
@@ -54,7 +53,7 @@
         </nav>
 
         <!-- CONTENT BLOCK  -->
-        <div class="container ">
+        <div class="container">
             <div class="col-md-12">
                 <div class="blog_post">
                 {% block content %}
