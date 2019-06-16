@@ -129,7 +129,7 @@ class DraftListView(LoginRequiredMixin, ListView):
         return Post.objects.filter(published_date__isnull=True).order_by('created_date')
 
     def get_context_data(self, **kwargs):
-        context = super(TopIngredientView, self).get_context_data(**kwargs)
+        context = super(DraftListView, self).get_context_data(**kwargs)
         context['most_used_ingredients'] = self.most_used_ingredients
         return context
 
@@ -163,7 +163,7 @@ def post_rate(request,pk):
             Rate.objects.create(user=user, post=post, rate_point=point)
 
         except IntegrityError:
-            Rate.objects.filter(post=post, user=user).update(rate_point=point)
+            Rate.objects.filter(user=user, post=post).update(rate_point=point)
 
     return redirect('post_detail', pk=pk)
 

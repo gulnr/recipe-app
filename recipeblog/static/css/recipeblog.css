@@ -6,6 +6,10 @@
 }
 .post-card h1 a{
     color:black;
+
+}
+.post-img{
+    img-size: %10;
 }
 
 .post-search-form{

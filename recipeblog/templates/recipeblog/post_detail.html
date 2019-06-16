@@ -12,7 +12,7 @@
         <a class="btn btn-outline-primary loader" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
     {% endif %}
 
-    <img class="rounded" alt="{{ post }}" src="{{ post.image.url }}"/>
+    <img class="rounded post-img" alt="{{ post }}" src="{{ post.image.url }}"/>
 
     <div class="post-detail-btn">
         {% if user.is_authenticated %}
@@ -54,6 +54,7 @@
 
 
             <input type="submit" class="btn btn-outline-primary loader" value="Rate"/>
+            <button type="button" class="btn btn-info loader">You Rated: {{post.rate_avg}}/5 ({{post.rate.count}} Votes)</button>
         </form>
     {% else %}
         <a class="btn btn-outline-primary loader" href="#">Rate</a>
