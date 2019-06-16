@@ -15,6 +15,7 @@ urlpatterns = [
     path('post/<int:pk>/publish/', views.post_publish, name='post_publish'),
     path('post/<int:pk>/like', views.post_like, name="post_like"),
     path('post/<int:pk>/rate', views.post_rate, name="post_rate"),
-    path('search', views.SearchPostListView.as_view(), name="search")
+    path('search', views.SearchPostListView.as_view(), name="search"),
+    path('search/<str:item_val>', views.TopIngredientView.as_view(), name="search_ingredient")
     # path('ingredient/<str:ingredient_value>/', views.ingredient, name='ingredient'),
 ]

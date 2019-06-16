@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.db.models import Q
+from django.db.models import Count
 from django.utils.datastructures import MultiValueDictKeyError
 
 # function based views use decorators | class based views use mixins
@@ -17,23 +18,34 @@ from django.utils.datastructures import MultiValueDictKeyError
 
 class PostListView(ListView):
     model = Post
+    most_used_ingredients = Post.objects.all().values(
+        'ingredients__ingredient_name').annotate(
+            total=Count('ingredients')).order_by('-total')[:5]
 
     # sql query filter  base on condition
     def get_queryset(self):
         return Post.objects.filter(published_date__lte=timezone.now()).order_by('created_date')
 
+    def get_context_data(self, **kwargs):
+        context = super(PostListView, self).get_context_data(**kwargs)
+        context['most_used_ingredients'] = self.most_used_ingredients
+        return context
+
 
 class SearchPostListView(ListView):
     model = Post
+    most_used_ingredients = Post.objects.all().values(
+        'ingredients__ingredient_name').annotate(
+            total=Count('ingredients')).order_by('-total')[:5]
 
     def get_queryset(self):
         query_list = [item.strip() for item in self.request.GET.get("query").split()]
         post_ids = set()
         for s_item in query_list:
-            for ing in Ingredient.objects.filter(ingredient__contains=s_item):
+            for ing in Ingredient.objects.filter(ingredient_name__contains=s_item):
                 post_ids.add(ing.id)
         result_list = Post.objects.filter(
-                ingredient__in=list(post_ids)).order_by("created_time")
+            ingredients__in=list(post_ids)).order_by("created_time")
 
         for s_item in query_list:
             result_list2 = Post.objects.filter(
@@ -42,6 +54,34 @@ class SearchPostListView(ListView):
             result_list = result_list | result_list2
 
             return result_list.distinct()
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchPostListView, self).get_context_data(**kwargs)
+        context['most_used_ingredients'] = self.most_used_ingredients
+        return context
+
+
+class TopIngredientView(ListView):
+    model = Post
+
+    most_used_ingredients = Post.objects.all().values(
+        'ingredients__ingredient_name').annotate(
+            total=Count('ingredients')).order_by('-total')[:5]
+
+    def get_queryset(self, **kwarg):
+        s_item = self.kwargs.get('item_val', None)
+        post_ids=set()
+        for ing in Ingredient.objects.filter(ingredient_name__contains=s_item):
+                post_ids.add(ing.id)
+        result_list = Post.objects.filter(ingredients__in=list(post_ids)).order_by("created_date")
+
+        return result_list
+
+    def get_context_data(self, **kwargs):
+        context = super(TopIngredientView, self).get_context_data(**kwargs)
+        context['most_used_ingredients'] = self.most_used_ingredients
+        return context
+
 
 
 class PostDetailView(DetailView):
@@ -81,9 +121,17 @@ class DraftListView(LoginRequiredMixin, ListView):
     redirect_field_name = 'recipeblog/post_list.html'
     model = Post
 
+    most_used_ingredients = Post.objects.all().values(
+        'ingredients__ingredient_name').annotate(
+            total=Count('ingredients')).order_by('-total')[:5]
+
     def get_queryset(self):
         return Post.objects.filter(published_date__isnull=True).order_by('created_date')
 
+    def get_context_data(self, **kwargs):
+        context = super(TopIngredientView, self).get_context_data(**kwargs)
+        context['most_used_ingredients'] = self.most_used_ingredients
+        return context
 
 
 @login_required
