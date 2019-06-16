@@ -45,7 +45,7 @@
      <!-- pagination-->
     <div class=" col-md-8 ">
         {% if is_paginated %}
-              <ul  class="pagination pagination-lg post-pagination">
+              <ul class="pagination pagination-lg post-pagination">
                 {% if page_obj.has_previous %}
                   <li class="page-item loader"><a class="page-link active" href="?page={{ page_obj.previous_page_number }}">Previous Page</a></li>
                 {% else %}
@@ -59,7 +59,7 @@
                 {% endif %}
               </ul>
         {% endif %}
-        <a style="color:grey;" class="alert alert-light" role="alert">
+        <a style="color:grey;" class="alert alert-light post-pagination-footer" role="alert">
             Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
         </a>
     </div>

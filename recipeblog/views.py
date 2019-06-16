@@ -85,9 +85,6 @@ class TopIngredientView(ListView):
         return context
 
 
-
-
-
 class PostDetailView(DetailView):
     model = Post
 

@@ -28,9 +28,15 @@
 }
 
 .post-pagination{
-    margin:15px;
+    margin:10px;
     padding: 10px;
-    justify:center;
+    display: flex;
+    justify-content: center;
+    margin-bottom:0px;
+}
+.post-pagination-footer{
+    display: flex;
+    justify-content: center;
 }
 
 .justify-end{
