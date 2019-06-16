@@ -97,6 +97,9 @@ class CreatePostView(LoginRequiredMixin, CreateView):
         obj = form.save(commit=False)
         obj.author = self.request.user
         obj.save()
+        for item in form.cleaned_data['ingredients']:
+            obj.ingredients.add(item)
+
         return HttpResponseRedirect(reverse('post_detail', args=[obj.pk]))
 
 
